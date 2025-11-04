@@ -1,33 +1,36 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "astroselling/webhook-logger",
+    "description": "Paquete Laravel para loguear webhooks recibidos, procesados y fallidos usando eventos. Dise?ado para generar m?tricas operativas y dashboards.",
     "keywords": [
-        ":vendor_name",
+        "Astroselling",
         "laravel",
-        ":package_slug"
+        "webhook-logger"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/astroselling/webhook-logger",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "isajar",
+            "email": "isajar.spector@astroselling.com",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^8.4",
+        "php": "^8.0",
         "spatie/laravel-package-tools": "^1.16",
-        "illuminate/contracts": "^11.0||^12.0"
+        "illuminate/contracts": "^9.0|^10.0|^11.0",
+        "illuminate/events": "^9.0|^10.0|^11.0",
+        "illuminate/support": "^9.0|^10.0|^11.0"
     },
     "require-dev": {
+        "larastan/larastan": "^3.0",
         "laravel/pint": "^1.14",
         "nunomaduro/collision": "^8.8",
-        "larastan/larastan": "^3.0",
         "orchestra/testbench": "^10.0.0||^9.0.0",
         "pestphp/pest": "^4.0",
         "pestphp/pest-plugin-arch": "^4.0",
         "pestphp/pest-plugin-laravel": "^4.0",
+        "pestphp/pest-plugin-type-coverage": "^4.0",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
@@ -35,23 +38,34 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Astroselling\\WebhookLogger\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/",
+            "Astroselling\\WebhookLogger\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
     "scripts": {
         "post-autoload-dump": "@composer run prepare",
         "prepare": "@php vendor/bin/testbench package:discover --ansi",
-        "analyse": "vendor/bin/phpstan analyse",
-        "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint"
+        "test:unit": "pest",
+        "test:types": "phpstan",
+        "test:lint": "pint",
+        "test:type-coverage": "pest --type-coverage --min=100",
+        "test-coverage": "pest --coverage",
+        "test": [
+            "@test:type-coverage",
+            "@test:unit",
+            "@test:lint"
+        ],
+        "test-512": [
+            "@test:lint",
+            "pest --type-coverage --min=100 -memory-limit=512M",
+            "phpstan --memory-limit=512M",
+            "@test:unit"
+        ]
     },
     "config": {
         "sort-packages": true,
@@ -63,10 +77,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Astroselling\\WebhookLogger\\WebhookLoggerServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "WebhookLogger": "Astroselling\\WebhookLogger\\Facades\\WebhookLogger"
             }
         }
     },

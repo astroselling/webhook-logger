@@ -16,7 +16,7 @@
     backupStaticProperties="false"
 >
     <testsuites>
-        <testsuite name="VendorName Test Suite">
+        <testsuite name="Astroselling Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
@@ -27,5 +27,8 @@
         <include>
             <directory suffix=".php">./src</directory>
         </include>
+        <exclude>
+            <directory suffix=".php">./vendor</directory>
+        </exclude>
     </source>
 </phpunit>
