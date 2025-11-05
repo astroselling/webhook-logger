@@ -59,12 +59,6 @@
             "@test:type-coverage",
             "@test:unit",
             "@test:lint"
-        ],
-        "test-512": [
-            "@test:lint",
-            "pest --type-coverage --min=100 -memory-limit=512M",
-            "phpstan --memory-limit=512M",
-            "@test:unit"
         ]
     },
     "config": {
