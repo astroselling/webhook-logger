@@ -17,16 +17,18 @@ it('dispatches WebhookReceived event when received method is called', function (
     $webhookId = 'webhook-456';
     $source = 'api';
     $traceId = 'trace-789';
+    $payload = ['order_id' => 12345, 'status' => 'pending'];
 
-    WebhookLogger::received($channelId, $channelType, $topic, $webhookId, $source, $traceId);
+    WebhookLogger::received($channelId, $channelType, $topic, $webhookId, $source, $traceId, $payload);
 
-    Event::assertDispatched(WebhookReceived::class, function ($event) use ($channelId, $channelType, $topic, $webhookId, $source, $traceId) {
+    Event::assertDispatched(WebhookReceived::class, function ($event) use ($channelId, $channelType, $topic, $webhookId, $source, $traceId, $payload) {
         return $event->channelId === $channelId
             && $event->channelType === $channelType
             && $event->topic === $topic
             && $event->webhookId === $webhookId
             && $event->source === $source
-            && $event->traceId === $traceId;
+            && $event->traceId === $traceId
+            && $event->payload === $payload;
     });
 });
 
@@ -43,7 +45,8 @@ it('dispatches WebhookReceived event with null optional parameters', function ()
             && $event->topic === $topic
             && $event->webhookId === null
             && $event->source === null
-            && $event->traceId === null;
+            && $event->traceId === null
+            && $event->payload === null;
     });
 });
 
@@ -55,17 +58,19 @@ it('dispatches WebhookProcessed event when processed method is called', function
     $source = 'api';
     $processingTimeMs = 150.5;
     $traceId = 'trace-789';
+    $payload = ['order_id' => 12345, 'status' => 'pending'];
 
-    WebhookLogger::processed($channelId, $channelType, $topic, $webhookId, $source, $processingTimeMs, $traceId);
+    WebhookLogger::processed($channelId, $channelType, $topic, $webhookId, $source, $processingTimeMs, $traceId, $payload);
 
-    Event::assertDispatched(WebhookProcessed::class, function ($event) use ($channelId, $channelType, $topic, $webhookId, $source, $processingTimeMs, $traceId) {
+    Event::assertDispatched(WebhookProcessed::class, function ($event) use ($channelId, $channelType, $topic, $webhookId, $source, $processingTimeMs, $traceId, $payload) {
         return $event->channelId === $channelId
             && $event->channelType === $channelType
             && $event->topic === $topic
             && $event->webhookId === $webhookId
             && $event->source === $source
             && $event->processingTimeMs === $processingTimeMs
-            && $event->traceId === $traceId;
+            && $event->traceId === $traceId
+            && $event->payload === $payload;
     });
 });
 
@@ -83,7 +88,8 @@ it('dispatches WebhookProcessed event with null optional parameters', function (
             && $event->webhookId === null
             && $event->source === null
             && $event->processingTimeMs === null
-            && $event->traceId === null;
+            && $event->traceId === null
+            && $event->payload === null;
     });
 });
 

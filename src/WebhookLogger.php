@@ -8,13 +8,17 @@ use Astroselling\WebhookLogger\Events\WebhookReceived;
 
 class WebhookLogger
 {
+    /**
+     * @param  array<string, mixed>|null  $payload
+     */
     public static function received(
         string $channelId,
         string $channelType,
         string $topic,
         ?string $webhookId = null,
         ?string $source = null,
-        ?string $traceId = null
+        ?string $traceId = null,
+        ?array $payload = null
     ): void {
         WebhookReceived::dispatch(
             $channelId,
@@ -22,10 +26,14 @@ class WebhookLogger
             $topic,
             $webhookId,
             $source,
-            $traceId
+            $traceId,
+            $payload
         );
     }
 
+    /**
+     * @param  array<string, mixed>|null  $payload
+     */
     public static function processed(
         string $channelId,
         string $channelType,
@@ -33,7 +41,8 @@ class WebhookLogger
         ?string $webhookId = null,
         ?string $source = null,
         ?float $processingTimeMs = null,
-        ?string $traceId = null
+        ?string $traceId = null,
+        ?array $payload = null
     ): void {
         WebhookProcessed::dispatch(
             $channelId,
@@ -42,7 +51,8 @@ class WebhookLogger
             $webhookId,
             $source,
             $processingTimeMs,
-            $traceId
+            $traceId,
+            $payload
         );
     }
 

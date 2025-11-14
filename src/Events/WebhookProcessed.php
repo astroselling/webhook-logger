@@ -17,5 +17,7 @@ class WebhookProcessed
         public ?string $source = null,
         public ?float $processingTimeMs = null,
         public ?string $traceId = null,
+        /** @var array<string, mixed>|null */
+        public ?array $payload = null,
     ) {}
 }

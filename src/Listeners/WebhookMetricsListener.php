@@ -39,6 +39,7 @@ class WebhookMetricsListener implements ShouldQueue
             'webhook_id' => $event->webhookId,
             'source' => $event->source,
             'trace_id' => $event->traceId,
+            'payload' => $event->payload,
             'timestamp' => now()->toISOString(),
         ]);
     }
@@ -54,6 +55,7 @@ class WebhookMetricsListener implements ShouldQueue
             'source' => $event->source,
             'processing_time_ms' => $event->processingTimeMs,
             'trace_id' => $event->traceId,
+            'payload' => $event->payload,
             'timestamp' => now()->toISOString(),
         ]);
     }

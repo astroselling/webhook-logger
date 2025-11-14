@@ -16,5 +16,7 @@ class WebhookReceived
         public ?string $webhookId = null,
         public ?string $source = null,
         public ?string $traceId = null,
+        /** @var array<string, mixed>|null */
+        public ?array $payload = null,
     ) {}
 }
